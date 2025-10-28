@@ -1,6 +1,6 @@
 import  pandas as pd
 import matplotlib.pyplot
-import PrettyTable
+from prettytable import PrettyTable
 
 '''
 useful tools:
@@ -31,7 +31,7 @@ running your program, and why is that option needed? Include the answer in your 
 '''
 
 df = pd.read_csv("county_economic_status_2024.csv", skiprows = 4, 
-skipfooter = 2, engine = "python", thousands = ',')
+skipfooter = 2, engine = "python", thousands = ",")
 
 df.columns = ['fips','state','county','arc_county', 'Economic Status', 'Average Unemployment Rate', 'Market Income', 'Poverty Rate', 'Average Unemp. Rate', 'PCMI Percent of US', 'Percent of US Inversed', 'Poverty Rate Percent', 'Composite Index Value', 'Index Value Rank', 'Quartile']
 df = df.iloc[1:]
@@ -44,6 +44,30 @@ poverty_max = df['Poverty Rate'].max()
 
 county_counts = df['state'].value_counts()
 
+table_top = PrettyTable()
+table_top.field_names = ["State", "# counties", "PCI (mean)", "PCI (median)", "Poverty Rate"]
+table_top.align["State"] = "l"
+all_states = []
+for state, count in county_counts.head(10).items():
+    state_data = df[df["state"] == state]
+    mean_pci = state_data["Market Income"].mean()
+    median_pci = state_data["Market Income"].median()
+    poverty = state_data["Poverty Rate"].mean()
+    table_top.add_row([state,count,f"{mean_pci:.2f}",f"{median_pci:.2f}",f"{poverty:.2f}"])
+
+table_bottom = PrettyTable()
+table_bottom.field_names = ["State", "# counties", "PCI (mean)", "PCI (median)", "Poverty Rate"]
+table_bottom.align["State"] = "l"
+all_states = []
+for state, count in county_counts.tail(10).items():
+    state_data = df[df["state"] == state]
+    mean_pci = state_data["Market Income"].mean()
+    median_pci = state_data["Market Income"].median()
+    poverty = state_data["Poverty Rate"].mean()
+    table_bottom.add_row([state,count,f"{mean_pci:.2f}",f"{median_pci:.2f}",f"{poverty:.2f}"])
+    if state == "District of Columbia":
+        del table_bottom._rows[9]
+
 print(f"The mean Poverty Rate is: {poverty_average}")
 
 print(f"The standard deviation Poverty Rate is: {poverty_std}")
@@ -54,5 +78,5 @@ print(f"The maximum Poverty Rate is: {poverty_max}")
 
 print(county_counts)
 
-
-
+print(table_top)
+print(table_bottom)
