@@ -1,6 +1,6 @@
 import  pandas as pd
-#import matplotlib.pyplot
-#import PrettyTable
+import matplotlib.pyplot
+import PrettyTable
 
 '''
 useful tools:
@@ -42,6 +42,8 @@ poverty_std = df['Poverty Rate'].std()
 poverty_min = df['Poverty Rate'].min()
 poverty_max = df['Poverty Rate'].max()
 
+county_counts = df['state'].value_counts()
+
 print(f"The mean Poverty Rate is: {poverty_average}")
 
 print(f"The standard deviation Poverty Rate is: {poverty_std}")
@@ -49,5 +51,8 @@ print(f"The standard deviation Poverty Rate is: {poverty_std}")
 print(f"The minimum Poverty Rate is: {poverty_min}")
 
 print(f"The maximum Poverty Rate is: {poverty_max}")
+
+print(county_counts)
+
 
 
