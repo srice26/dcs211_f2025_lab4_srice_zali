@@ -1,5 +1,5 @@
 import  pandas as pd
-import matplotlib.pyplot
+#import matplotlib.pyplot
 from prettytable import PrettyTable
 
 '''
@@ -68,6 +68,27 @@ for state, count in county_counts.tail(10).items():
     if state == "District of Columbia":
         del table_bottom._rows[9]
 
+
+'''
+Now include code to print a PrettyTable displaying information of the top ten counties (regardless of state) by
+decreasing poverty rate. Include the state, county, per capita income, poverty rate, and average unemployment.
+Your table should look like:
+'''
+
+#county stuff
+count_10_poverty = df.sort_values(by='Poverty Rate', ascending=False).head(10)
+print((f"The top10 is: {count_10_poverty}"))
+
+table_county = PrettyTable()
+table_county.field_names = ["State", "County", "PCI", "Poverty Rate", "Avg Unemployment"]
+table_county.align["State"] = "l"
+for county, row in count_10_poverty.iterrows():
+    table_county.add_row([row["state"], row["county"], f"{row['Market Income']:.2f}", f"{row['Poverty Rate']:.2f}", f"{row['Average Unemployment Rate']:.2f}"])
+
+
+
+
+
 print(f"The mean Poverty Rate is: {poverty_average}")
 
 print(f"The standard deviation Poverty Rate is: {poverty_std}")
@@ -80,3 +101,5 @@ print(county_counts)
 
 print(table_top)
 print(table_bottom)
+
+print(table_county)
