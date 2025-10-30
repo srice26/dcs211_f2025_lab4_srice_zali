@@ -212,5 +212,5 @@ def main() -> None:
     printTableBy(df, 'Average Unemployment Rate', 10, "counties by Average Unemployment Rate")
     createByStateBarPlot(df, 'Poverty Rate', "pov_rate.png", "States By Poverty Rate", "Poverty Rate")
     createByStateBarPlot(df, 'Average Unemployment Rate', "unemp_rate.png", "States By Unemployment Rate", "Employment Rate")
-    
+    createByStateBarPlot(df, 'Market Income', "per_capita_income.png", "States By Per Capita Income", "Per Capita Income")
 main()
